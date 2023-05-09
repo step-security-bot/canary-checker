@@ -383,6 +383,16 @@ type URL struct {
 }
 
 type SystemResult struct{}
+
+type TestSeverity int
+
+const (
+	TestSeverityUnknown TestSeverity = iota
+	TestSeverityLow
+	TestSeverityHigh
+	TestSeverityCritical
+)
+
 type CheckResult struct {
 	Start       time.Time
 	Pass        bool
@@ -396,8 +406,9 @@ type CheckResult struct {
 	Error       string
 	Metrics     []Metric
 	// Check is the configuration
-	Check  external.Check
-	Canary v1.Canary
+	Check        external.Check
+	Canary       v1.Canary
+	TestSeverity TestSeverity
 }
 
 func (result CheckResult) GetDescription() string {
